@@ -12,8 +12,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/et_todoTitle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/et_todoTitle"
@@ -29,6 +31,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Todo"
+        android:textAllCaps="false"
+        android:paddingHorizontal="0dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_delTodo" />
 
@@ -37,6 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete Done"
+        android:textAllCaps="false"
+        android:paddingHorizontal="8dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
