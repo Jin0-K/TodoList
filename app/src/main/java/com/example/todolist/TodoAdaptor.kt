@@ -31,7 +31,7 @@ class TodoAdaptor (
 
     fun deleteDoneTodos() {
         todos.removeAll { todo ->
-            todo.isChecked
+            todo.get_isChecked()
         }
         notifyDataSetChanged()
     }
@@ -47,12 +47,12 @@ class TodoAdaptor (
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         val curTodo = todos[position]
         holder.itemView.apply {
-            tv_todoTitle.text = curTodo.title
-            cb_done.isChecked = curTodo.isChecked
-            toggleStrikeThrough(tv_todoTitle, curTodo.isChecked)
+            tv_todoTitle.text = curTodo.get_title()
+            cb_done.isChecked = curTodo.get_isChecked()
+            toggleStrikeThrough(tv_todoTitle, curTodo.get_isChecked())
             cb_done.setOnCheckedChangeListener { _, isChecked ->
                 toggleStrikeThrough(tv_todoTitle, isChecked)
-                curTodo.isChecked = !curTodo.isChecked
+                curTodo.check()
             }
         }
     }

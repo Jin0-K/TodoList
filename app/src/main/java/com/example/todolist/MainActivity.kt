@@ -18,13 +18,26 @@ class MainActivity : AppCompatActivity() {
         rv_todoItems.adapter = todoAdaptor
         rv_todoItems.layoutManager = LinearLayoutManager(this)
 
+        // display items in database
+        val dbHelper = DBHelper(this)
+
+        dbHelper.getTodos().forEach{ todo ->
+            todoAdaptor.addTodo(todo)
+        }
+
         btn_addTodo.setOnClickListener {
+            val todo : Todo
             val todoTitle = et_todoTitle.text.toString()
             if (todoTitle.isNotEmpty()) {
-                val todo = Todo(todoTitle)
+                todo = Todo(-1, todoTitle)
                 todoAdaptor.addTodo(todo)
                 et_todoTitle.text.clear()
             }
+            else {
+                todo = Todo(-1, "")
+            }
+
+            dbHelper.add(todo)
         }
 
         btn_delTodo.setOnClickListener {
