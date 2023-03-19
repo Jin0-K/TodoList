@@ -18,19 +18,12 @@ class MainActivity : AppCompatActivity() {
         // Initialize the content property
         context = applicationContext
 
+        val dbHelper = DBHelper(context)
+
         todoAdaptor = TodoAdaptor(mutableListOf())
 
         rv_todoItems.adapter = todoAdaptor
-        rv_todoItems.layoutManager = LinearLayoutManager(this)
-
-        // display items in database
-        val dbHelper = DBHelper(context)
-        dbHelper.writableDatabase
-
-        // Application stops in this part
-        dbHelper.getTodos().forEach{ todo ->
-            todoAdaptor.addTodo(todo)
-        }
+        rv_todoItems.layoutManager = LinearLayoutManager(context)
 
 
         btn_addTodo.setOnClickListener {
@@ -38,18 +31,24 @@ class MainActivity : AppCompatActivity() {
             val todoTitle = et_todoTitle.text.toString()
             if (todoTitle.isNotEmpty()) {
                 todo = Todo(-1, todoTitle)
+                dbHelper.add(todo)
                 todoAdaptor.addTodo(todo)
                 et_todoTitle.text.clear()
             }
-            else {
-                todo = Todo(-1, "")
-            }
-
-            //dbHelper.add(todo)
         }
 
         btn_delTodo.setOnClickListener {
             todoAdaptor.deleteDoneTodos()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // display items in database
+        val dbHelper = DBHelper(context)
+        dbHelper.getTodos().forEach{ todo ->
+            todoAdaptor.addTodo(todo)
         }
     }
 }
