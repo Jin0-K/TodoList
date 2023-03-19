@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         // display items in database
         val dbHelper = DBHelper(this)
 
+        // Application stops in this part
         dbHelper.getTodos().forEach{ todo ->
             todoAdaptor.addTodo(todo)
         }
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 todo = Todo(-1, "")
             }
 
-            dbHelper.add(todo)
+            //dbHelper.add(todo)
         }
 
         btn_delTodo.setOnClickListener {

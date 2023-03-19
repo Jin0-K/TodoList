@@ -75,7 +75,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             } while (cursor.moveToNext())
         }
         else {
-            // failure. do no add anyting to the list
+            // failure. do not add anything to the list
         }
 
         // close both cursor and the db when done
