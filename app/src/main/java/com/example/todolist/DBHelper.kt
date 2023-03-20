@@ -42,14 +42,19 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return !insert.equals(-1)
     }
 
-    fun delete(todo: Todo) : Boolean {
-        val db : SQLiteDatabase = this.writableDatabase
-        val whereClause = "ID = ?"
-        val whereArgs = arrayOf(todo.get_id().toString())
-        val delete = db.delete(TODO_TABLE, whereClause, whereArgs)
+    fun delete(list: MutableList<Todo>): Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgs = Array(list.size) { "0" } // Initialize with default value
 
+        for ((index, todo) in list.withIndex()) {
+            whereArgs[index] = todo.get_id().toString()
+        }
+
+        val delete = db.delete(TODO_TABLE, whereClause, whereArgs)
         return delete > 0
     }
+
 
     fun getTodos() : List<Todo> {
         val returnList  = mutableListOf<Todo>()

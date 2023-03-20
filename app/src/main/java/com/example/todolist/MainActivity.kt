@@ -38,12 +38,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_delTodo.setOnClickListener {
-            todoAdaptor.deleteDoneTodos()
+            dbHelper.delete(todoAdaptor.deleteDoneTodos())
         }
     }
 
     override fun onResume() {
         super.onResume()
+
+        // clear all the items displayed
+        todoAdaptor.clearAll()
 
         // display items in database
         val dbHelper = DBHelper(context)

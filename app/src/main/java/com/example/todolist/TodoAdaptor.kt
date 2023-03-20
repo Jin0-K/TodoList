@@ -29,10 +29,25 @@ class TodoAdaptor (
         notifyItemInserted(todos.size - 1)
     }
 
-    fun deleteDoneTodos() {
+    fun deleteDoneTodos() : MutableList<Todo> {
+        val checked = mutableListOf<Todo>()
+
+        todos.forEach { todo ->
+            if (todo.get_isChecked()) {
+                checked.add(todo)
+            }
+        }
+
         todos.removeAll { todo ->
             todo.get_isChecked()
         }
+        notifyDataSetChanged()
+
+        return checked
+    }
+
+    fun clearAll() {
+        todos.clear()
         notifyDataSetChanged()
     }
 
