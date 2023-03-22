@@ -55,6 +55,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return delete > 0
     }
 
+    fun updateCheck(list: MutableList<Todo>) {
+        val db : SQLiteDatabase = this.writableDatabase
+
+        list.forEach { todo ->
+            val id = todo.get_id().toString()
+            val checked = if (todo.get_isChecked()) 1 else 0
+            val updateStatement = "UPDATE $TODO_TABLE SET $COLUMN_CHECKED = $checked WHERE $COLUMN_ID = $id"
+            db.execSQL(updateStatement)
+        }
+    }
 
     fun getTodos() : List<Todo> {
         val returnList  = mutableListOf<Todo>()

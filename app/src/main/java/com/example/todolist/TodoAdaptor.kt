@@ -24,6 +24,8 @@ class TodoAdaptor (
         )
     }
 
+    fun getTodos() : MutableList<Todo> { return todos }
+
     fun addTodo(todo : Todo) {
         todos.add(todo)
         notifyItemInserted(todos.size - 1)
@@ -55,7 +57,7 @@ class TodoAdaptor (
         if (isChecked) {
             tv_todoTitle.paintFlags = tv_todoTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
         } else {
-            tv_todoTitle.paintFlags = tv_todoTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv() // remove flangs in paintFlag
+            tv_todoTitle.paintFlags = tv_todoTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv() // remove flags in paintFlag
         }
     }
 

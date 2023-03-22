@@ -25,7 +25,14 @@ class MainActivity : AppCompatActivity() {
         rv_todoItems.adapter = todoAdaptor
         rv_todoItems.layoutManager = LinearLayoutManager(context)
 
+        // clear all the items displayed
+        todoAdaptor.clearAll()
+        // display items in database
+        dbHelper.getTodos().forEach{ todo ->
+            todoAdaptor.addTodo(todo)
+        }
 
+        // Button click listeners
         btn_addTodo.setOnClickListener {
             val todo : Todo
             val todoTitle = et_todoTitle.text.toString()
@@ -42,16 +49,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onDestroy() {
+        super.onDestroy()
 
-        // clear all the items displayed
-        todoAdaptor.clearAll()
-
-        // display items in database
         val dbHelper = DBHelper(context)
-        dbHelper.getTodos().forEach{ todo ->
-            todoAdaptor.addTodo(todo)
+
+        val todoList = todoAdaptor.getTodos()
+
+        if (todoList.size > 0) {
+            dbHelper.updateCheck(todoList)
         }
     }
 }
