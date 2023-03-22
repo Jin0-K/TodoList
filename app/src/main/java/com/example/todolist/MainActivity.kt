@@ -53,7 +53,17 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         val dbHelper = DBHelper(context)
+        val todoList = todoAdaptor.getTodos()
 
+        if (todoList.size > 0) {
+            dbHelper.updateCheck(todoList)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val dbHelper = DBHelper(context)
         val todoList = todoAdaptor.getTodos()
 
         if (todoList.size > 0) {
